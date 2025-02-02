@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
 
 	while (true) {
 		for (i = 0; i < argc; i++) {
-			switch (servstat(argv[i]) {
+			switch (servstat(argv[i])) {
 			case 1:
 				gpioWrite(pins[i], 1);
 			case 0:
