@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <jetgpio.h>
 
 #define MAX_CMD_LENGTH 128
 
