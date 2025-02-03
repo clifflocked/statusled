@@ -18,6 +18,7 @@ void handle_sigint(int sig) {
 
 
 int main(int argc, char *argv[]) {
+	signal(SIGINT, handle_sigint);
 	// This variable will be used to check the status of initialisation of general GPIO as well as individual pins.
 	int Init;
 	Init = gpioInitialise();
