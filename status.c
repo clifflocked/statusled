@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
 	int pins[] = {3, 5, 6, 8, 9, 10, 11, 12, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 29, 31, 32, 33, 35, 36, 37, 38, 40};
 	
 	// Check if all processes exist
-	for (i = 1; i < argc; i++) {
+	for (int i = 1; i < argc; i++) {
 		if (servstat(argv[i]) == -1) {
 			printf("Process does not exist or is not found: %s\n", argv[i]);
 			exit(-1);
@@ -50,7 +50,7 @@ int main(int argc, char *argv[]) {
 	// Initialise list containing each GPIO pin that we plan to write to
 	int *stats[argc];
 
-	for (i = 1; i < argc; i++) {
+	for (int i = 1; i < argc; i++) {
 		stats[i] = gpioSetMode(pins[i], JET_OUTPUT);
 		if (stats[i] < 0) {
 			printf("Failed initialising GPIO pin: %d\n", pins[i]);
@@ -61,7 +61,7 @@ int main(int argc, char *argv[]) {
 	}
 
 	while (true) {
-		for (i = 1; i < argc; i++) {
+		for (int i = 1; i < argc; i++) {
 			switch (servstat(argv[i])) {
 			case 1:
 				gpioWrite(pins[i], 1);
