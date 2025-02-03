@@ -4,6 +4,12 @@
 
 #define MAX_CMD_LENGTH 128
 
+void handle_sigint(int sig) {
+	printf("Stopping status LEDs...");
+	gpioTerminate();
+	exit(0);
+}
+
 int servstat(const char *service_name) {
 	char cmd[MAX_CMD_LENGTH];
 	FILE *fp;

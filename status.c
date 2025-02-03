@@ -10,15 +10,13 @@
 #include "status.h"
 #define LEN(x) (sizeof(x) / sizeof((x)[0]))
 
-void handle_sigint(int sig) {
-	printf("Stopping status LEDs...");
-	gpioTerminate();
-	exit(0);
-}
 
 
 int main(int argc, char *argv[]) {
+
+	// Make sure that a sigint (ctrl+c) will properly stop the gpio
 	signal(SIGINT, handle_sigint);
+	
 	// This variable will be used to check the status of initialisation of general GPIO as well as individual pins.
 	int Init;
 	Init = gpioInitialise();
