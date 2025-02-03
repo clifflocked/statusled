@@ -1,4 +1,4 @@
-JETGPIO_URL = https://github.com/Rubberazer/JETGPIO/archive/refs/heads/main.zip
+JETGPIO_URL = https://github.com/Rubberazer/JETGPIO/archive/refs/tags/v1.2.zip
 JETGPIO_ZIP = JETGPIO-main.zip
 JETGPIO_DIR = JETGPIO-main
 
