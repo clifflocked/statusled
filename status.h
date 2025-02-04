@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <jetgpio.h>
 
 #define _GNU_SOURCE
 
@@ -13,11 +12,11 @@ void handle_sigint(int sig) {
 
 int procstat(const char pid[]) {
 	FILE *fp;
-	char file[];
+	char file[255];
 	char loc[] = "/proc/";
 	char *ret;
 
-	char statuses[] = {"running", "sleeping", "idle", "zombie"};
+	char statuses[4][9] = ["running", "sleeping", "idle", "zombie"];
 
 	strcat(loc, pid);
 	strcat(loc, "/status");
