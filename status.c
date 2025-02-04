@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
 	
 	// Check if all processes exist
 	for (int i = 1; i < argc; i++) {
-		if (servstat(argv[i]) == -1) {
+		if (procstat(argv[i]) == -1) {
 			printf("Process does not exist or is not found: %s\n", argv[i]);
 			exit(-1);
 		}
@@ -61,17 +61,17 @@ int main(int argc, char *argv[]) {
 
 	while (true) {
 		for (int i = 1; i < argc; i++) {
-			switch (servstat(argv[i])) {
-			case 1:
+			switch (procstat(argv[i])) {
+			case 3:
 				gpioWrite(pins[i], 1);
+			case 2:
+				gpioWrite(pins[i], 1);
+			case 1:
+				gpioWrite(pins[i], 0);
 			case 0:
 				gpioWrite(pins[i], 0);
 			case -1:
 				printf("Service %s does not exist. Aborting", argv[i]);
-				gpioTerminate();
-				exit(-1);
-			case -2:
-				printf("Something went wrong when reading from pipe for service %s. Aborting", argv[i]);
 				gpioTerminate();
 				exit(-1);
 			}

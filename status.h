@@ -3,7 +3,7 @@
 #include <string.h>
 #include <jetgpio.h>
 
-#define MAX_CMD_LENGTH 128
+#define _GNU_SOURCE
 
 void handle_sigint(int sig) {
 	printf("Stopping status LEDs...");
@@ -11,35 +11,29 @@ void handle_sigint(int sig) {
 	exit(0);
 }
 
-int servstat(const char *service_name) {
-	char cmd[MAX_CMD_LENGTH];
+int procstat(const char pid[]) {
 	FILE *fp;
-	char output[16];
+	char file[];
+	char loc[] = "/proc/";
+	char *ret;
 
-	// Prepare command to run
-	snprintf(cmd, sizeof(cmd), "systemctl is-enabled %s", service_name);
+	char statuses[] = {"running", "sleeping", "idle", "zombie"};
 
-	// Open pipe to command
-	fp = popen(cmd, "r");
-	if (fp == NULL) {
-		perror("popen failed");
-		return -2;
-	}
+	strcat(loc, pid);
+	strcat(loc, "/status");
 
-	// Read output 
-	if ((fgets(output, sizeof(output), fp) != NULL)) {
-		// Check if service is enabled
-		if ((strncmp(output, "enabled", 7)) == 0) { 
-			fclose(fp);
-			return 1;
-		}
-		// If service is not enabled, check if it doesn't exist
-		if ((strncmp(output, "not-found", 7)) == 0) {
-			fclose(fp);
-			return -1;
+	fp = fopen(loc, "r");
+	
+	if (fp == NULL) { exit(-1); }
+	
+	fgets(file, 255, fp);
+
+	for (int i = 0; i < 4; i++) {
+		ret = strstr(file, statuses[i]);
+		if (ret) {
+			return i;
 		}
 	}
 
-	fclose(fp);
-	return 0;
+	return -1;
 }
