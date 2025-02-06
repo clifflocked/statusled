@@ -1,14 +1,11 @@
-JETGPIO_URL = https://github.com/Rubberazer/JETGPIO/archive/refs/tags/v1.2.zip
-JETGPIO_ZIP = JETGPIO-main.zip
-JETGPIO_DIR = JETGPIO-main
+JETGPIO_URL = https://github.com/Rubberazer/JETGPIO
+JETGPIO_DIR = JETGPIO
 
 all: statusled
 
 jetgpio:
 	@echo "Downloading Jetgpio from source $(JETGPIO_URL)"
-	wget $(JETGPIO_URL) -O $(JETGPIO_ZIP)
-	@echo "Unzipping $(JETGPIO_ZIP)"
-	unzip $(JETGPIO_ZIP)
+	git clone $(JETGPIO_URL)
 	@echo "Compiling Jetgpio"
 	cd $(JETGPIO_DIR) && sudo make $(nproc)
 	cd $(JETGPIO_DIR) && sudo make install
