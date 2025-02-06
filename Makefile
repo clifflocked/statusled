@@ -16,4 +16,6 @@ jetgpio:
 
 statusled:
 	@echo "Building statusled"
-	gcc status.c
+	cd $(JETGPIO_DIR) && \
+	gcc -c -fpic status.c -o status.o
+	gcc -shared -o statusled status.o -LJETGPIO-main -ljetgpio
